@@ -1,3 +1,4 @@
+using ExpenseControl.Api.Data;
 using Microsoft.AspNetCore.Mvc;
 namespace ExpenseControl.Api.Controllers;
 
@@ -5,31 +6,48 @@ namespace ExpenseControl.Api.Controllers;
 [Route("api/[controller]")]
 public class PessoaController : ControllerBase
 {
-    private static List<Pessoa> people = new();
+    private readonly AppDBContext _context;
+    private PessoaBL pessoaBL;   
+    public PessoaController(AppDBContext context)
+    {
+        _context = context;
+        pessoaBL = new PessoaBL(_context);
+    }
+
+    [HttpGet("ID")]
+    public IActionResult GetById(Guid id)
+    {
+        var pessoa = pessoaBL.Registro(id);
+        if (pessoa == null)
+        {
+            return NotFound();
+        }
+        return Ok(pessoa);
+    }
 
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(people);
+        return Ok(pessoaBL.Listar());
     }
 
     [HttpPost]
     public IActionResult Post(Pessoa pessoa)
-    {
-        people.Add(pessoa);
-        return CreatedAtAction(nameof(Get), new { id = pessoa.Id }, pessoa);
+    {        
+        return Ok(pessoaBL.Gravar(pessoa));
     }
     [HttpPut("{id}")]
     public IActionResult Put(Guid id, Pessoa pessoa)
     {
-        var existingPerson = people.FirstOrDefault(p => p.Id == id);
-        if (existingPerson == null)
+        if (id != pessoa.Id)
         {
-            return NotFound();
+            return BadRequest("ID da pessoa não corresponde ao ID do parâmetro.");
         }
-
-        people.Remove(existingPerson);
-        people.Add(pessoa);
-        return Ok(pessoa);
+        return Ok(pessoaBL.Atualizar(pessoa));
+    }
+    [HttpDelete("{id}")]
+    public IActionResult Delete(Guid id)
+    {      
+        return Ok(pessoaBL.Excluir(id));
     }
 }
