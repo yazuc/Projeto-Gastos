@@ -1,5 +1,5 @@
 using ExpenseControl.Api.Data;
-
+using ExpenseControl.DTO;
 public class CategoriaBL
 {
     private readonly AppDBContext _context;
@@ -11,6 +11,11 @@ public class CategoriaBL
     public List<Categoria> Listar()
     {
         return _context.Categorias.ToList();
+    }
+
+    public List<CategoriaDTO> ListarDTO()
+    {
+        return _context.Categorias.Select(c => new CategoriaDTO(c.Id, c.Descricao, c.Finalidade)).ToList();
     }
 
     public Categoria Registro(Guid id)

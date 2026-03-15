@@ -25,6 +25,26 @@ public class CategoriaController : ControllerBase
         return Ok(categoria);
     }
 
+    [HttpGet("finalidades")]
+    public IActionResult GetFinalidades()
+    {
+        var values = Enum.GetValues(typeof(Finalidade))
+            .Cast<Finalidade>()
+            .Select(f => new
+            {
+                id = (int)f,
+                nome = f.ToString()
+            });
+
+        return Ok(values);
+    }
+
+    [HttpGet("ListarDTO")]
+    public IActionResult GetDTO()
+    {
+        return Ok(categoriaBL.ListarDTO());
+    }
+
     [HttpGet]
     public IActionResult Get()
     {        
