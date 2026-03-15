@@ -2998,24 +2998,25 @@
     ]
   },
   "packageFolders": {
-    "/home/leozin/.nuget/packages/": {}
+    "/home/jules/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/Nvme/projeto-controlegastos/backend/GastosControl.Api/GastosControl.Api.csproj",
+      "projectUniqueName": "/app/backend/GastosControl.Api/GastosControl.Api.csproj",
       "projectName": "GastosControl.Api",
-      "projectPath": "/mnt/Nvme/projeto-controlegastos/backend/GastosControl.Api/GastosControl.Api.csproj",
-      "packagesPath": "/home/leozin/.nuget/packages/",
-      "outputPath": "/mnt/Nvme/projeto-controlegastos/backend/GastosControl.Api/obj/",
+      "projectPath": "/app/backend/GastosControl.Api/GastosControl.Api.csproj",
+      "packagesPath": "/home/jules/.nuget/packages/",
+      "outputPath": "/app/backend/GastosControl.Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/leozin/.nuget/NuGet/NuGet.Config"
+        "/home/jules/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3074,12 +3075,8 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.25, 8.0.25]"
-          },
-          {
             "name": "Microsoft.NETCore.App.Host.linux-x64",
-            "version": "[8.0.25, 8.0.25]"
+            "version": "[8.0.24, 8.0.24]"
           }
         ],
         "frameworkReferences": {
@@ -3090,7 +3087,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.104/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.103/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
