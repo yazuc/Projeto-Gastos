@@ -1,12 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 public class Pessoa{
     public Guid Id { get; set; }
-    public string Name { get; set; }
-    public int Age { get; set; }
-
-    public Pessoa(Guid id, string name, int age)
+    [MaxLength(200)]
+    public string Nome { get; set; }
+    public int Idade { get; set; }
+    public Pessoa()
     {
-        Id = id;
-        Name = name;
-        Age = age;
     }
 }
