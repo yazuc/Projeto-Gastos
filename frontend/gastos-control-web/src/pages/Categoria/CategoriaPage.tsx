@@ -43,10 +43,11 @@ export default function CategoriaPage() {
     return (
         <div>
             <h1>Categorias</h1>
+           
             <Form.Group className="row">
                 <Form.Group className="mb-3 col-md-6">
                     <Form.Label>Descrição</Form.Label>
-                    <Form.Control type="textarea" placeholder="Digite a descrição da categoria" value={descricao} onChange={e => setDescricao(e.target.value)} />
+                    <Form.Control as="textarea" placeholder="Digite a descrição da categoria" value={descricao} onChange={e => setDescricao(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3 col-md-6">
                     <Form.Label>Finalidades</Form.Label>

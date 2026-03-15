@@ -1,5 +1,6 @@
 import PessoasPage from "./pages/Pessoas/PessoasPage"
 import CategoriaPage from "./pages/Categoria/CategoriaPage";
+import TransacaoPage from "./pages/Transacao/TransacaoPage";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -33,7 +34,7 @@ function App() {
           <Routes>
             <Route path="/pessoas" element={<PessoasPage />} />
             <Route path="/categoria" element={<CategoriaPage />} />
-            <Route path="/transacao" element={<PessoasPage />} />
+            <Route path="/transacao" element={<TransacaoPage />} />
           </Routes>
         </main>
 

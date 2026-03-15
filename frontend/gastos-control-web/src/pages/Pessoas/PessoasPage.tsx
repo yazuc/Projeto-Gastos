@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Modal, Button, Form } from "react-bootstrap"
+import { Modal, Button, Form, Table } from "react-bootstrap"
 import { api } from "../../api/api"
 import type { Pessoa } from "../../types/Pessoa"
 
@@ -81,29 +81,30 @@ export default function PessoasPage() {
       </div>
 
       <hr />
-
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Idade</th>
-          </tr>
-        </thead>
-        <tbody className="table-group-divider">
-          {pessoas.map(p => (
-                <tr>
-                  <td>{p.nome}</td>
-                  <td>{p.idade}</td>
-                  <td onClick={() => editarPessoa(p.id)}>
-                    <span className="badge bg-primary">Editar</span>
-                  </td>
-                  <td onClick={() => deletePessoa(p.id)}>
-                    <span className="badge bg-danger">Remover</span>
-                  </td>
-                </tr>
-          ))}
-        </tbody>
-      </table>      
+      <Form.Group>
+        <Table striped bordered hover>      
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Idade</th>
+              </tr>
+            </thead>
+            <tbody className="table-group-divider">
+              {pessoas.map(p => (
+                <tr key={p.id}>
+                      <td>{p.nome}</td>
+                      <td>{p.idade}</td>
+                      <td onClick={() => editarPessoa(p.id)}>
+                        <span className="badge bg-primary">Editar</span>
+                      </td>
+                      <td onClick={() => deletePessoa(p.id)}>
+                        <span className="badge bg-danger">Remover</span>
+                      </td>
+                    </tr>
+              ))}
+            </tbody>        
+        </Table>
+      </Form.Group>
 
         <Modal
           show={showModal}
