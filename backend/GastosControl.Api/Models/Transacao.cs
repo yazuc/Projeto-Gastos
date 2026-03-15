@@ -1,6 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+
 public class Transacao
 {
     public Guid Id { get; set; }
+    [MaxLength(400)]
     public string Descricao { get; set; }
     public decimal Valor { get; set; }
     public DateTime Data { get; set; }
