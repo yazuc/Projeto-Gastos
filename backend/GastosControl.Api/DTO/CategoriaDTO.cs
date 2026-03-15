@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Extensions;
 
-namespace ExpenseControl.DTO;
+namespace GastosControl.DTO;
 public class CategoriaDTO
 {
     public Guid Id { get; set; }

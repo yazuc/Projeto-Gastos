@@ -1,6 +1,6 @@
-using ExpenseControl.Api.Data;
+using GastosControl.Api.Data;
 using Microsoft.AspNetCore.Mvc;
-namespace ExpenseControl.Api.Controllers;
+namespace GastosControl.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

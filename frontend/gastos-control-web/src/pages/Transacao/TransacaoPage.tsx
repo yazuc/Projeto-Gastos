@@ -8,6 +8,15 @@ export default function TransacaoPage() {
     const [categorias, setCategorias] = useState<any[]>([])
     const [pessoas, setPessoas] = useState<any[]>([])
     const [tipos, setTipo] = useState<any[]>([])
+    const [transacoes, setTransacoes] = useState<any[]>([])
+
+    const [pessoaId, setPessoaId] = useState("")
+    const [categoriaId, setCategoriaId] = useState("")
+    const [tipoId, setTipoId] = useState("")
+    const [valor, setValor] = useState(0)
+    const [data, setData] = useState("")
+    const [descricao, setDescricao] = useState("")
+
     const listCategorias = () => {
         api.get("/categoria/ListarDTO")
           .then(res => setCategorias(res.data))
@@ -33,11 +42,52 @@ export default function TransacaoPage() {
     useEffect(() => {
         listTipos()
     }, [])
+
+    const loadTransacoes = () => {
+        api.get("/transacao")
+            .then(res => setTransacoes(res.data))
+    }
+    useEffect(() => {
+        loadTransacoes()
+    }, [])
     
 
     const openModal = () => {
+        setPessoaId("")
+        setCategoriaId("")
+        setTipoId("")
+        setValor(0)
+        setData("")
+        setDescricao("")
         setShowModal(true)
     }
+
+    const salvarTransacao = async () => {
+        try {
+            await api.post("/transacao", {
+                pessoaId,
+                categoriaId,
+                tipo: parseInt(tipoId),
+                valor,
+                data,
+                descricao
+            })
+            setShowModal(false)
+            loadTransacoes()
+        } catch (error: any) {
+            alert("Erro ao salvar transação: " + (error.response?.data?.message || error.message))
+        }
+    }
+
+    const formatCurrency = (value: number) => {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString)
+        return date.toLocaleDateString('pt-BR')
+    }
+
     return (
         <div>
             <h1>Transações</h1>
@@ -46,6 +96,32 @@ export default function TransacaoPage() {
                 Adicionar
                 </button>
             </div>
+            <Form.Group>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Pessoa</th>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th>Data</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {transacoes.map((t) => (
+                            <tr key={t.id}>
+                                <td>{t.descricao}</td>
+                                <td>{t.pessoa}</td>
+                                <td>{t.categoria}</td>
+                                <td>{t.tipo === 0 ? "Despesa" : (t.tipo === 1 ? "Receita" : "Indefinido")}</td>
+                                <td>{formatDate(t.data)}</td>
+                                <td>{formatCurrency(t.valor)}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </Form.Group>
             <Modal 
                 size="lg"
                 show={showModal}
@@ -59,42 +135,49 @@ export default function TransacaoPage() {
                     <Form.Group className="row">
                         <Form.Group className="mb-3 col-md-6">
                             <Form.Label>Pessoa</Form.Label>
-                            <Form.Select aria-placeholder="selecione" defaultValue="">
+                            <Form.Select aria-placeholder="selecione" value={pessoaId} onChange={e => setPessoaId(e.target.value)}>
                                 <option value="" disabled>Selecione uma pessoa</option>
                                 {pessoas.map((p) => (
-                                    <option value={p.id}> {p.nome}</option>                                    
-                                ))}
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group className="mb-3 col-md-6">
-                            <Form.Label>Categoria</Form.Label>
-                            <Form.Select key={1} defaultValue="">
-                                <option value="" disabled>Selecione uma categoria</option>
-                                {categorias.map((c) => (
-                                    <option value={c.id}> {c.descricao}</option>                                    
+                                    <option key={p.id} value={p.id}> {p.nome}</option>                                    
                                 ))}
                             </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3 col-md-6">
                             <Form.Label>Tipo</Form.Label>
-                            <Form.Select key={2} defaultValue="">
+                            <Form.Select value={tipoId} onChange={e => setTipoId(e.target.value)}>
                                 <option value="" disabled>Selecione o tipo</option>
                                 {tipos.map((t) => (
-                                    <option value={t.id}>{t.nome}</option>
+                                    <option key={t.id} value={t.id}>{t.nome}</option>
                                 ))}
                             </Form.Select>                        
                         </Form.Group>
                         <Form.Group className="mb-3 col-md-6">
+                            <Form.Label>Categoria</Form.Label>
+                            <Form.Select value={categoriaId} onChange={e => setCategoriaId(e.target.value)}>
+                                <option value="" disabled>Selecione uma categoria</option>
+                                {categorias.map((c) => (
+                                    <option key={c.id} value={c.id}> {c.descricao}</option>                                    
+                                ))}
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3 col-md-6">
                             <Form.Label>Valor</Form.Label>
-                            <CurrencyInput className="form-control" decimalsLimit={2} prefix="R$ " placeholder="Digite o valor da transação" />
+                            <CurrencyInput 
+                                className="form-control" 
+                                decimalsLimit={2} 
+                                prefix="R$ " 
+                                placeholder="Digite o valor da transação" 
+                                value={valor}
+                                onValueChange={(value) => setValor(value ? parseFloat(value.replace(',', '.')) : 0)}
+                            />
                         </Form.Group>
                         <Form.Group className="mb-3 col-md-6">
                             <Form.Label>Data</Form.Label>
-                            <Form.Control type="date" placeholder="Digite a data da transação" />
+                            <Form.Control type="date" placeholder="Digite a data da transação" value={data} onChange={e => setData(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3 col-md-12">
                             <Form.Label>Descrição</Form.Label>
-                            <Form.Control as="textarea" placeholder="Digite a descrição da transação" />
+                            <Form.Control as="textarea" placeholder="Digite a descrição da transação" value={descricao} onChange={e => setDescricao(e.target.value)} />
                         </Form.Group>
                     </Form.Group>
                 </Modal.Body>
@@ -102,7 +185,7 @@ export default function TransacaoPage() {
                     <Button variant="secondary" onClick={() => {setShowModal(false)}}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={() => {}}>
+                    <Button variant="primary" onClick={salvarTransacao}>
                         Salvar
                     </Button>
                 </Modal.Footer>

@@ -1,6 +1,7 @@
 import PessoasPage from "./pages/Pessoas/PessoasPage"
 import CategoriaPage from "./pages/Categoria/CategoriaPage";
 import TransacaoPage from "./pages/Transacao/TransacaoPage";
+import TotaisPessoaPage from "./pages/Relatorios/TotaisPessoaPage";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -26,6 +27,9 @@ function App() {
             <Link className="nav-link" to="/transacao">
               Transações
             </Link>
+            <Link className="nav-link" to="/totaispessoa">
+              Relatório
+            </Link>
 
           </div>
         </nav>
@@ -35,6 +39,7 @@ function App() {
             <Route path="/pessoas" element={<PessoasPage />} />
             <Route path="/categoria" element={<CategoriaPage />} />
             <Route path="/transacao" element={<TransacaoPage />} />
+            <Route path="/totaispessoa" element={<TotaisPessoaPage/>} />
           </Routes>
         </main>
 

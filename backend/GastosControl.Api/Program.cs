@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using ExpenseControl.Api.Data;
+using GastosControl.Api.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);

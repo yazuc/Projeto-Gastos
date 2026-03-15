@@ -1,6 +1,6 @@
-using ExpenseControl.Api.Data;
+using GastosControl.Api.Data;
 using Microsoft.AspNetCore.Mvc;
-namespace ExpenseControl.Api.Controllers;
+namespace GastosControl.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -23,6 +23,38 @@ public class TransacaoController : ControllerBase
             return NotFound();
         }
         return Ok(transacao);
+    }
+
+    [HttpGet("RelatorioTotais")]
+    public IActionResult GetRelatorioTotais()
+    {
+        return Ok(transacaoBL.ObterRelatorioTotaisPorPessoa());
+    }
+
+    [HttpGet("RelatorioCategoriaTotais")]
+    public IActionResult GetRelatorioCategoriaTotais()
+    {
+        return Ok(transacaoBL.ObterTotaisPorCategoria());
+    }
+
+    [HttpGet]
+    public IActionResult Get()
+    {
+        return Ok(transacaoBL.ListarTodos());
+    }
+
+    [HttpGet("Tipo")]
+    public IActionResult GetTipos()
+    {
+        var values = Enum.GetValues(typeof(Tipo))
+            .Cast<Tipo>()
+            .Select(f => new
+            {
+                id = (int)f,
+                nome = f.ToString()
+            });
+
+        return Ok(values);
     }
 
     [HttpGet("PessoaID")]

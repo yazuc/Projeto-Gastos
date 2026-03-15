@@ -63,7 +63,6 @@ export default function PessoasPage() {
 
 
   const deletePessoa = async (id: string) => {
-    if (!confirm("Deseja remover essa pessoa?")) return
     await api.delete(`/pessoa/${id}`)
     loadPeople()
   }  
@@ -87,6 +86,7 @@ export default function PessoasPage() {
               <tr>
                 <th>Nome</th>
                 <th>Idade</th>
+                <th colSpan={2}>Ações</th>
               </tr>
             </thead>
             <tbody className="table-group-divider">

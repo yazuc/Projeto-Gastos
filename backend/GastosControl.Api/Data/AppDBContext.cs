@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpenseControl.Api.Data;
+namespace GastosControl.Api.Data;
 
 public class AppDBContext : DbContext
 {

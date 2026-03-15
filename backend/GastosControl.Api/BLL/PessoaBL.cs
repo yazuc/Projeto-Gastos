@@ -1,4 +1,4 @@
-using ExpenseControl.Api.Data;
+using GastosControl.Api.Data;
 
 public class PessoaBL
 {
@@ -66,6 +66,13 @@ public class PessoaBL
             if (pessoaExistente == null)
             {
                 return false;
+            }
+
+            var transacoes = _context.Transacoes.Where(t => t.PessoaId == PessoaID).ToList();
+            if (transacoes.Any())
+            {
+                _context.Transacoes.RemoveRange(transacoes);
+                _context.SaveChanges();
             }
 
             _context.Pessoas.Remove(pessoaExistente);

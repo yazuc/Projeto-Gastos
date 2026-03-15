@@ -1,5 +1,5 @@
-using ExpenseControl.Api.Data;
-using ExpenseControl.DTO;
+using GastosControl.Api.Data;
+using GastosControl.DTO;
 public class CategoriaBL
 {
     private readonly AppDBContext _context;
