@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "./api/api";
 
-interface Person {
+interface Pessoa {
   id: string;
   name: string;
   age: number;
@@ -9,7 +9,7 @@ interface Person {
 
 function App() {
 
-  const [people, setPeople] = useState<Person[]>([]);
+  const [Pessoas, setPeople] = useState<Pessoa[]>([]);
 
   useEffect(() => {
     api.get("/pessoa")
@@ -20,7 +20,7 @@ function App() {
     <div>
       <h1>Pessoas</h1>
 
-      {people.map(p => (
+      {Pessoas.map(p => (
         <div key={p.id}>
           {p.name} - {p.age}
         </div>
