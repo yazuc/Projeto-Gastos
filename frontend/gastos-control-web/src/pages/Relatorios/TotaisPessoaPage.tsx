@@ -41,11 +41,6 @@ export default function TotaisPessoaPage() {
         loadRelatorio();
         loadRelatorioCategorias();
     }, []);
-    // Adicione um novo estado
-
-
-    // No seu useEffect ou loadRelatorio, chame a nova API
-   
 
     const formatCurrency = (value: number) => {
         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);

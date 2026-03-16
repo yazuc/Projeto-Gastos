@@ -75,6 +75,8 @@ export default function TransacaoPage() {
             setShowModal(false)
             loadTransacoes()
         } catch (error: any) {
+            //erro genérico, mas poderia ter sido implementado um sistema para retornar mensagens.
+            //aqui retorna badrequest para as condições que não podem acontecer.
             alert("Erro ao salvar transação: " + (error.response?.data?.message || error.message))
         }
     }

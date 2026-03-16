@@ -50,15 +50,17 @@ public class TransacaoBL
         if (categoria == null)
             throw new Exception("Categoria não encontrada.");
 
+        //tratamento de erros, usuário menor de idade não pode gerar receita.
         if(pessoa.Idade < 18 && transacao.Tipo == Tipo.Receita)
         {
             throw new Exception("Menores de idade podem registrar apenas despesas.");
-        }
-        
+        }        
+        //tratamento de erros, transação não pode ser tipo despesa, com finalidade de receita.
         if (transacao.Tipo == Tipo.Despesas && categoria.Finalidade == Finalidade.Receita)
         {
             throw new Exception("Categoria não permitida para o tipo de transação (Despesa).");
         }
+        //tratamento de erros, transação não pode ser tipo receita, com finalidade de despesa.
         if (transacao.Tipo == Tipo.Receita && categoria.Finalidade == Finalidade.Despesas)
         {
             throw new Exception("Categoria não permitida para o tipo de transação (Receita).");
@@ -87,6 +89,7 @@ public class TransacaoBL
             })
             .ToList();
         //soma feita em memória por limitação do sqlite
+        //soma de todas as pessoas por tipo de receita
         var listaPessoas = dadosBrutos.Select(p => new TotaisPessoaDTO
         {
             NomePessoa = p.Nome,
@@ -108,6 +111,7 @@ public class TransacaoBL
 
     public List<TotaisCategoriaDTO> ObterTotaisPorCategoria()
     {
+        //soma de todas as pessoas por categoria
         return _context.Categorias
             .Select(c => new TotaisCategoriaDTO
             {
